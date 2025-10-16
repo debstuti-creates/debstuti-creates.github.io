@@ -31,12 +31,14 @@ export interface TopicContent {
 import { scalabilityContent } from "@/content/topics/scalability";
 import { cachingContent } from "@/content/topics/caching";
 import { databasesContent } from "@/content/topics/databases";
+import { urlShortenerContent } from "@/content/topics/urlShortener";
 
 export const topicContentMap: Record<string, TopicContent> = {
   // System Design Topics
   "scalability": scalabilityContent,
   "caching": cachingContent,
   "databases": databasesContent,
+  "urlShortener": urlShortenerContent,
 
   // AI/ML Fundamentals
   "ml-basics": {

@@ -1,6 +1,6 @@
 import { TopicContent } from "@/data/topicContent";
 
-export const cachingContent: TopicContent = {
+export const urlShortenerContent: TopicContent = {
   introduction: `Url Shortener is a technique to store frequently accessed data in a fast-access location, 
   reducing the need to retrieve it from slower sources. Effective caching can reduce database load by 
   80-95% and improve response times from seconds to milliseconds.`,

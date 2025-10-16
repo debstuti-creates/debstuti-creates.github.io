@@ -50,6 +50,11 @@ export const courses: Course[] = [
         id: "distributed-systems",
         title: "Distributed Systems",
         description: "Microservices, message queues, event-driven architecture"
+      },
+      {
+        id: "url-shortener-system-design",
+        title: "URL Shortener System Design",
+        description: "Shorten your URLs the scalable way"
       }
     ]
   },
