@@ -146,6 +146,22 @@ Famous examples:
           - atomic increment
           - sharded for scalability`,    
         },
+        {
+        title: "Deep-Dive",
+        content: `
+        Updated design..
+        `,
+        image: "/images/urlShortener/deepdive2.png"
+        },
+        {
+        title: "What id Redis is a Single point of failure?",
+        content: `
+         Redis can Single Point of failure
+
+          Server 1 : 0 - 1L
+          Server 2: 1L - 2L
+          Server 3: 2L - 3L`,    
+       },
   ],
   
   keyConcepts: [
