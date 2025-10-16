@@ -163,54 +163,12 @@ Famous examples:
           Server 3: 2L - 3L`,    
        },
   ],
-
-
   
-  exampleTitle: "Real-World Scalability: Netflix",
-  exampleDescription: `Netflix is one of the best examples of horizontal scaling in action. They stream to over 
-  200 million subscribers globally, handling massive traffic spikes during popular show releases.
+  keyConcepts: [
+  ],
   
-  Their approach:
-  • Microservices architecture with over 700 microservices
-  • Auto-scaling on AWS - thousands of instances spin up/down based on demand
-  • CDN (Content Delivery Network) for distributing content globally
-  • Regional failover for high availability
-  • Chaos engineering to test system resilience`,
-  exampleCode: `// Simple Load Balancer Implementation
-class LoadBalancer {
-  constructor() {
-    this.servers = [
-      { id: 'server-1', capacity: 1000, currentLoad: 0 },
-      { id: 'server-2', capacity: 1000, currentLoad: 0 },
-      { id: 'server-3', capacity: 1000, currentLoad: 0 }
-    ];
-    this.currentIndex = 0;
-  }
-
-  // Round-robin distribution
-  getNextServer() {
-    const server = this.servers[this.currentIndex];
-    this.currentIndex = (this.currentIndex + 1) % this.servers.length;
-    return server;
-  }
-
-  // Least connections algorithm
-  getLeastLoadedServer() {
-    return this.servers.reduce((min, server) => 
-      server.currentLoad < min.currentLoad ? server : min
-    );
-  }
-
-  // Health check
-  async checkServerHealth(server) {
-    try {
-      const response = await fetch(\`\${server.url}/health\`);
-      return response.ok;
-    } catch (error) {
-      return false;
-    }
-  }
-}`,
+  exampleTitle: "..",
+  exampleDescription: `..`,
   
   practicalTips: [
     {
@@ -232,11 +190,7 @@ class LoadBalancer {
   ],
   
   takeaways: [
-    "Horizontal scaling provides better fault tolerance than vertical scaling",
-    "Plan for scalability from day one to avoid costly refactoring",
-    "Monitor system metrics to identify bottlenecks early",
-    "Use auto-scaling to handle variable traffic patterns",
-    "Stateless architecture is key to effective horizontal scaling"
+    
   ],
   
   furtherReading: [
