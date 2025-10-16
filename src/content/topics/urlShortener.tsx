@@ -1,11 +1,23 @@
 import { TopicContent } from "@/data/topicContent";
 
 export const urlShortenerContent: TopicContent = {
-  introduction: `URL Shortener is the capability of a system to handle growing amounts of work by adding resources. 
-  It's one of the most critical aspects of modern system design, determining whether your application can serve 
-  10 users or 10 million users without degradation in performance.`,
+  introduction: `A URL shortener is a system that takes a long URL and converts it into a short, unique link that redirects to the original address.
+Example:
+
+Input:  https://www.youtube.com/watch?v=dQw4w9WgXcQ  
+Output: https://short.ly/abc123
+
+
+When a user visits https://short.ly/abc123, the system redirects them to the original YouTube link.
+
+Famous examples:
+
+• Bit.ly
+• TinyURL
+• t.co (Twitter)
+• goo.gl (deprecated, Google)`,
   
-  heroImage: "/placeholder.svg", // Replace with actual image path
+  heroImage: "/images/urlShortener/hero.png", // Replace with actual image path
   
   sections: [
     {
@@ -15,7 +27,6 @@ export const urlShortenerContent: TopicContent = {
          custom alias?
          expiration time?
       • fetch/redirect long url for a short url`,
-      image: "/placeholder.svg"
     },
     {
       title: "Non-Functional Requirements",
@@ -30,7 +41,6 @@ export const urlShortenerContent: TopicContent = {
       • Requires load balancing infrastructure
       • Data consistency across multiple nodes
       • More complex application architecture`,
-      image: "/placeholder.svg"
     },
     {
       title: "Vertical Scaling (Scale Up)",
