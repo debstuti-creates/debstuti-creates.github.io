@@ -1,7 +1,7 @@
 import { TopicContent } from "@/data/topicContent";
 
 export const urlShortenerContent: TopicContent = {
-  introduction: `Scalability is the capability of a system to handle growing amounts of work by adding resources. 
+  introduction: `URL Shortener is the capability of a system to handle growing amounts of work by adding resources. 
   It's one of the most critical aspects of modern system design, determining whether your application can serve 
   10 users or 10 million users without degradation in performance.`,
   
