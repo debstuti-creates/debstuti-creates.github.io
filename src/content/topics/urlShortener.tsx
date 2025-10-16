@@ -170,32 +170,13 @@ Famous examples:
   exampleTitle: "..",
   exampleDescription: `..`,
   
-  practicalTips: [
-    {
-      title: "Start with vertical, plan for horizontal",
-      description: "Begin with vertical scaling for simplicity, but architect your application for horizontal scaling from day one."
-    },
-    {
-      title: "Monitor everything",
-      description: "Use tools like Prometheus, Grafana to track CPU, memory, network I/O, and application metrics."
-    },
-    {
-      title: "Design stateless services",
-      description: "Stateless services are easier to scale horizontally. Store state in external databases or caches."
-    },
-    {
-      title: "Implement caching layers",
-      description: "Cache frequently accessed data to reduce database load and improve response times."
-    }
-  ],
+  
   
   takeaways: [
-    
+
   ],
   
   furtherReading: [
-    { title: "AWS Auto Scaling Documentation", url: "https://aws.amazon.com/autoscaling/" },
-    { title: "The Art of Scalability", url: "#" },
-    { title: "Designing Data-Intensive Applications", url: "#" }
+  
   ]
 };
