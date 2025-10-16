@@ -1,165 +1,139 @@
 import { TopicContent } from "@/data/topicContent";
 
 export const urlShortenerContent: TopicContent = {
-  introduction: `Url Shortener is a technique to store frequently accessed data in a fast-access location, 
-  reducing the need to retrieve it from slower sources. Effective caching can reduce database load by 
-  80-95% and improve response times from seconds to milliseconds.`,
+  introduction: `Scalability is the capability of a system to handle growing amounts of work by adding resources. 
+  It's one of the most critical aspects of modern system design, determining whether your application can serve 
+  10 users or 10 million users without degradation in performance.`,
   
-  heroImage: "/placeholder.svg",
+  heroImage: "/placeholder.svg", // Replace with actual image path
   
   sections: [
     {
-      title: "Why Caching Matters",
-      content: `Every database query, API call, or computation takes time and resources. Caching allows you to:
-      • Serve requests faster by avoiding repeated expensive operations
-      • Reduce load on databases and backend services
-      • Lower infrastructure costs
-      • Improve user experience with faster page loads
-      
-      The challenge is determining what to cache, where to cache it, and when to invalidate cached data.`,
+      title: "Functional Requirements",
+      content: `- Create unique short url for a long url
+        - custom alias?
+        - expiration time?
+    - fetch/redirect long url for a short url`,
       image: "/placeholder.svg"
     },
     {
-      title: "Caching Layers",
-      content: `Modern applications typically use multiple caching layers:
+      title: "Non-Functional Requirements",
+      content: `
+      • CAP theorem - eventual consistency
+      • High Availability
+      • latency ( as low latency as possible)
+      • low latency for redirects (~ 200ms)
+      • scale (100 million DAU, 10 billion redirects daily)
       
-      1. Browser Cache: Stores static assets (images, CSS, JS) on user's device
-      2. CDN Cache: Geographically distributed servers cache content closer to users
-      3. Application Cache: In-memory cache within your application (Redis, Memcached)
-      4. Database Cache: Query result caching at the database level
-      
-      Each layer serves a specific purpose and has different characteristics.`,
+      Challenges:
+      • Requires load balancing infrastructure
+      • Data consistency across multiple nodes
+      • More complex application architecture`,
       image: "/placeholder.svg"
     },
     {
-      title: "Cache Invalidation Strategies",
-      content: `"There are only two hard things in Computer Science: cache invalidation and naming things." - Phil Karlton
+      title: "Vertical Scaling (Scale Up)",
+      content: `Vertical scaling involves adding more power (CPU, RAM, Storage) to existing machines. 
+      It's simpler to implement but has physical limitations.
       
-      Common strategies:
+      Benefits:
+      • Simpler application architecture
+      • No need to change code for most applications
+      • Easier data consistency (single machine)
       
-      Time-To-Live (TTL): Cache expires after a fixed duration
-      • Simple to implement
-      • Risk of serving stale data
-      
-      Write-Through: Update cache immediately when data changes
-      • Cache always fresh
-      • Higher write latency
-      
-      Write-Behind: Update cache immediately, update database asynchronously
-      • Low latency for writes
-      • Risk of data loss if cache fails
-      
-      Cache-Aside: Application checks cache first, loads from DB if miss
-      • Most common pattern
-      • Application controls caching logic`,
+      Limitations:
+      • Hardware limits - can't scale infinitely
+      • Single point of failure
+      • Downtime required for upgrades
+      • Diminishing returns on investment`,
       image: "/placeholder.svg"
     }
   ],
   
   keyConcepts: [
-    "CDN Caching - Storing static assets closer to users globally",
-    "Redis/Memcached - In-memory data stores for fast access",
-    "Cache Invalidation - Strategies for keeping cached data fresh",
-    "Cache-Aside Pattern - Load data into cache on demand",
-    "Cache Hit Ratio - Measure of caching effectiveness"
+    "Horizontal Scaling - Adding more machines to distribute load",
+    "Vertical Scaling - Increasing resources of existing machines",
+    "Load Distribution - Efficiently spreading traffic across servers",
+    "Capacity Planning - Predicting and preparing for growth",
+    "Auto-scaling - Dynamically adjusting resources based on demand"
   ],
   
-  exampleTitle: "Multi-Level Caching in E-commerce",
-  exampleDescription: `Amazon's product pages demonstrate sophisticated caching:
+  exampleTitle: "Real-World Scalability: Netflix",
+  exampleDescription: `Netflix is one of the best examples of horizontal scaling in action. They stream to over 
+  200 million subscribers globally, handling massive traffic spikes during popular show releases.
   
-  • Product images and CSS are cached in CDN and browser (rarely change)
-  • Product information cached in Redis (updated when inventory changes)
-  • User cart data cached in application memory (short TTL)
-  • Prices checked in real-time (not cached, changes frequently)
-  
-  This approach balances freshness with performance.`,
-  exampleCode: `// Redis Cache Implementation with TTL
-import Redis from 'ioredis';
-
-class CacheService {
+  Their approach:
+  • Microservices architecture with over 700 microservices
+  • Auto-scaling on AWS - thousands of instances spin up/down based on demand
+  • CDN (Content Delivery Network) for distributing content globally
+  • Regional failover for high availability
+  • Chaos engineering to test system resilience`,
+  exampleCode: `// Simple Load Balancer Implementation
+class LoadBalancer {
   constructor() {
-    this.redis = new Redis({
-      host: 'localhost',
-      port: 6379
-    });
+    this.servers = [
+      { id: 'server-1', capacity: 1000, currentLoad: 0 },
+      { id: 'server-2', capacity: 1000, currentLoad: 0 },
+      { id: 'server-3', capacity: 1000, currentLoad: 0 }
+    ];
+    this.currentIndex = 0;
   }
 
-  // Cache-aside pattern
-  async getUserData(userId) {
-    const cacheKey = \`user:\${userId}\`;
-    
-    // Try cache first
-    const cached = await this.redis.get(cacheKey);
-    if (cached) {
-      console.log('Cache hit');
-      return JSON.parse(cached);
-    }
-    
-    // Cache miss - fetch from database
-    console.log('Cache miss');
-    const user = await db.users.findById(userId);
-    
-    // Store in cache with 1-hour TTL
-    await this.redis.setex(
-      cacheKey, 
-      3600, 
-      JSON.stringify(user)
+  // Round-robin distribution
+  getNextServer() {
+    const server = this.servers[this.currentIndex];
+    this.currentIndex = (this.currentIndex + 1) % this.servers.length;
+    return server;
+  }
+
+  // Least connections algorithm
+  getLeastLoadedServer() {
+    return this.servers.reduce((min, server) => 
+      server.currentLoad < min.currentLoad ? server : min
     );
-    
-    return user;
   }
 
-  // Invalidate cache when data changes
-  async updateUser(userId, updates) {
-    await db.users.update(userId, updates);
-    
-    // Remove from cache to ensure fresh data
-    await this.redis.del(\`user:\${userId}\`);
-  }
-
-  // Warm cache with frequently accessed data
-  async warmCache(userIds) {
-    for (const userId of userIds) {
-      const user = await db.users.findById(userId);
-      await this.redis.setex(
-        \`user:\${userId}\`,
-        3600,
-        JSON.stringify(user)
-      );
+  // Health check
+  async checkServerHealth(server) {
+    try {
+      const response = await fetch(\`\${server.url}/health\`);
+      return response.ok;
+    } catch (error) {
+      return false;
     }
   }
 }`,
   
   practicalTips: [
     {
-      title: "Cache frequently accessed, rarely changed data",
-      description: "User profiles, product catalogs, configuration settings are ideal candidates."
+      title: "Start with vertical, plan for horizontal",
+      description: "Begin with vertical scaling for simplicity, but architect your application for horizontal scaling from day one."
     },
     {
-      title: "Set appropriate TTLs",
-      description: "Balance between data freshness and cache efficiency. Product prices might need 5-minute TTL, while user profiles can have 1-hour TTL."
+      title: "Monitor everything",
+      description: "Use tools like Prometheus, Grafana to track CPU, memory, network I/O, and application metrics."
     },
     {
-      title: "Monitor cache hit rates",
-      description: "Aim for 80%+ hit rate. Low hit rates indicate poor caching strategy or too short TTLs."
+      title: "Design stateless services",
+      description: "Stateless services are easier to scale horizontally. Store state in external databases or caches."
     },
     {
-      title: "Use cache namespaces",
-      description: "Organize cache keys with prefixes like 'user:', 'product:', 'session:' for easier management."
+      title: "Implement caching layers",
+      description: "Cache frequently accessed data to reduce database load and improve response times."
     }
   ],
   
   takeaways: [
-    "Caching can reduce database load by 80-95%",
-    "Choose TTL based on data freshness requirements",
-    "Implement cache warming for frequently accessed data",
-    "Monitor cache hit rates to optimize strategy",
-    "Use multiple caching layers for optimal performance"
+    "Horizontal scaling provides better fault tolerance than vertical scaling",
+    "Plan for scalability from day one to avoid costly refactoring",
+    "Monitor system metrics to identify bottlenecks early",
+    "Use auto-scaling to handle variable traffic patterns",
+    "Stateless architecture is key to effective horizontal scaling"
   ],
   
   furtherReading: [
-    { title: "Redis Documentation", url: "https://redis.io/docs/" },
-    { title: "CDN Best Practices", url: "#" },
-    { title: "Cache Invalidation Patterns", url: "#" }
+    { title: "AWS Auto Scaling Documentation", url: "https://aws.amazon.com/autoscaling/" },
+    { title: "The Art of Scalability", url: "#" },
+    { title: "Designing Data-Intensive Applications", url: "#" }
   ]
 };
