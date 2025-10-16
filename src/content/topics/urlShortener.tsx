@@ -164,13 +164,7 @@ Famous examples:
        },
   ],
   
-  keyConcepts: [
-  ],
-  
-  exampleTitle: "..",
-  exampleDescription: `..`,
-  
-  
+
   
   takeaways: [
 
