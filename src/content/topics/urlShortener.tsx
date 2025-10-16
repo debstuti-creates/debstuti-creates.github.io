@@ -7,11 +7,9 @@ Example:
 Input:  https://www.youtube.com/watch?v=dQw4w9WgXcQ  
 Output: https://short.ly/abc123
 
-
 When a user visits https://short.ly/abc123, the system redirects them to the original YouTube link.
 
 Famous examples:
-
 • Bit.ly
 • TinyURL
 • t.co (Twitter)
@@ -24,8 +22,8 @@ Famous examples:
       title: "Functional Requirements",
       content: `
       • Create unique short url for a long url
-         custom alias?
-         expiration time?
+         - custom alias?
+         - expiration time?
       • fetch/redirect long url for a short url`,
     },
     {
@@ -36,28 +34,35 @@ Famous examples:
       • latency ( as low latency as possible)
       • low latency for redirects (~ 200ms)
       • scale (100 million DAU, 10 billion redirects daily)
-      
-      Challenges:
-      • Requires load balancing infrastructure
-      • Data consistency across multiple nodes
-      • More complex application architecture`,
+      `,
     },
     {
-      title: "Vertical Scaling (Scale Up)",
-      content: `Vertical scaling involves adding more power (CPU, RAM, Storage) to existing machines. 
-      It's simpler to implement but has physical limitations.
-      
-      Benefits:
-      • Simpler application architecture
-      • No need to change code for most applications
-      • Easier data consistency (single machine)
-      
-      Limitations:
-      • Hardware limits - can't scale infinitely
-      • Single point of failure
-      • Downtime required for upgrades
-      • Diminishing returns on investment`,
-      image: "/placeholder.svg"
+      title: "Entities",
+      content: `
+      • User
+      • LongUrl
+      • ShortUrl`,
+    },
+    {
+      title: "APIs",
+      content: `
+      POST /urls -> 201 created
+      {
+        longUrl,
+        alias?
+        expirationTime?
+      }
+
+      GET {shortUrl} -> redirecting to long url
+
+        301 redirect -> permanent
+        302 redirect -> temporary
+      `,
+    },
+    {
+      title: "High Level Architecture",
+      content: `High Level Architecture of URL Shortener`,
+      image: "/images/urlShortener/hla.png"
     }
   ],
   
