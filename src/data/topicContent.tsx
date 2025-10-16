@@ -29,6 +29,7 @@ export interface TopicContent {
 
 // Import topic content files
 import { urlShortenerContent } from "@/content/topics/urlShortener";
+//import { amazonContent } from "@/content/topics/amazon";
 import { scalabilityContent } from "@/content/topics/scalability";
 import { cachingContent } from "@/content/topics/caching";
 import { databasesContent } from "@/content/topics/databases";
@@ -37,6 +38,7 @@ import { databasesContent } from "@/content/topics/databases";
 export const topicContentMap: Record<string, TopicContent> = {
   // System Design Topics
   "url-shortener-system-design": urlShortenerContent,
+ // "amazon-system-design": amazonContent,
   "scalability": scalabilityContent,
   "caching": cachingContent,
   "databases": databasesContent,

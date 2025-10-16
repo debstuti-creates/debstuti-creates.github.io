@@ -1,62 +1,94 @@
 import { TopicContent } from "@/data/topicContent";
 
-export const urlShortenerContent: TopicContent = {
-  introduction: `A URL shortener is a system that takes a long URL and converts it into a short, unique link that redirects to the original address.
-Example:
+export const amazonContent: TopicContent = {
+  introduction: `Amazon (or any large-scale e-commerce system like Flipkart, eBay, or Alibaba) is an online marketplace that allows:
 
-Input:  https://www.youtube.com/watch?v=dQw4w9WgXcQ  
-Output: https://short.ly/abc123
+  - Customers to browse, search, and buy products.
+  - Sellers to list and manage their products.
+  - Admins to monitor and ensure reliability, payments, and logistics.
 
-When a user visits https://short.ly/abc123, the system redirects them to the original YouTube link.
+It’s a massive, distributed, high-availability system supporting:
 
-Famous examples:
-• Bit.ly
-• TinyURL
-• t.co (Twitter)
-• goo.gl (deprecated, Google)`,
+  - Millions of users 👥
+  - Billions of products 🛍️
+  - Global operations 🌍
+  - Real-time inventory and order updates ⚙️`,
   
-  heroImage: "/images/urlShortener/hero.png", // Replace with actual image path
+ // heroImage: "/images/urlShortener/hero.png", // Replace with actual image path
   
   sections: [
     {
       title: "Functional Requirements",
       content: `
-      • Create unique short url for a long url
-         - custom alias?
-         - expiration time?
-      • fetch/redirect long url for a short url`,
+      • seller can add items
+      • buyer can search items
+      • view item details
+      • add item to cart
+      • checkout/place order (inventory management, payment etc)
+      • view orders
+      • fetch/redirect long url for a short url
+      
+      low priority requirements for this discussion:
+        • add item to wishlist
+        • recommend items to user home page
+        • notify users about order status`,
     },
     {
       title: "Non-Functional Requirements",
       content: `
-      • CAP theorem - eventual consistency
-      • High Availability
-      • latency ( as low latency as possible)
-      • low latency for redirects (~ 200ms)
-      • scale (100 million DAU, 10 billion redirects daily)
+      • low latency (for search)
+      • high availability (for search)
+      • high consistency (for order placement)
+      • eventual consistency for item onboarding, search etc.
       `,
     },
     {
       title: "Entities",
       content: `
-      • User
-      • LongUrl
-      • ShortUrl`,
+      • item
+      • buyer
+      • seller
+      • cart
+      • order`,
     },
     {
       title: "APIs",
       content: `
-      POST /urls -> 201 created
-      {
-        longUrl,
-        alias?
-        expirationTime?
-      }
+      POST /items
+        {
+            name,
+            description,
+            price,
+            quantity,
+            ..
+        }
 
-      GET {shortUrl} -> redirecting to long url
+   
 
-        301 redirect -> permanent
-        302 redirect -> temporary
+ # search items
+
+    GET /items?term={}&cursor={}&size={}
+
+ # add item to cart
+
+    PATCH /cart
+        {
+        itemId,
+        quantity
+        }
+
+# checkout
+    
+    POST /checkout
+        {
+            cartId,
+            amount,
+            paymentInfo{
+                   paymentType,
+                   cardNo,
+                    ... 
+                }
+        }
       `,
     },
     {
