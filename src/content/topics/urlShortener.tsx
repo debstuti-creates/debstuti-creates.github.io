@@ -12,8 +12,8 @@ export const urlShortenerContent: TopicContent = {
       title: "Functional Requirements",
       content: `
       • Create unique short url for a long url
-        - custom alias?
-        - expiration time?
+         custom alias?
+         expiration time?
       • fetch/redirect long url for a short url`,
       image: "/placeholder.svg"
     },
